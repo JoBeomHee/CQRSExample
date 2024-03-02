@@ -17,7 +17,8 @@ builder.Services.AddSingleton<FakeDataStore>();
 
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 // MediatR Pipeline을 확장하고 FluentValidation을 사용하여 유효성 검사를 수행합니다.
-builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>)); 
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
 
 var app = builder.Build();
 

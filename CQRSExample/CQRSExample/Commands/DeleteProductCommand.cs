@@ -2,9 +2,9 @@
 
 namespace CQRSExample.Commands;
 
-public class DeleteProductCommand : IRequest<int>
+public record DeleteProductCommand : IRequest<int>
 {
-    public int Id { get; set; }
+    public int Id { get;  }
 
     public DeleteProductCommand(int id)
     {

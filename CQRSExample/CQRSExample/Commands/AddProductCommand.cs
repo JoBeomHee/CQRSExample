@@ -3,4 +3,4 @@ using MediatR;
 
 namespace CQRSExample.Commands;
 
-public record AddProductCommand(Product Product) : IRequest;
+public record AddProductCommand(Product Product) : IRequest<int>;

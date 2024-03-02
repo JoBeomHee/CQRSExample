@@ -2,10 +2,10 @@
 
 namespace CQRSExample.Commands;
 
-public class UpdateProductCommand : IRequest<int>
+public record UpdateProductCommand : IRequest<int>
 {
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public int Id { get; }
+    public string Name { get; }
 
     public UpdateProductCommand(int id, string name)
     {

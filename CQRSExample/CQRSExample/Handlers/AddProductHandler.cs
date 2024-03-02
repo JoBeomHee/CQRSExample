@@ -2,23 +2,26 @@
 using CQRSExample.Repository;
 using MediatR;
 
+
 namespace CQRSExample.Handlers;
 
-public class AddProductHandler : IRequestHandler<AddProductCommand>
+public class AddProductHandler : IRequestHandler<AddProductCommand, int>
 {
     private readonly FakeDataStore _fakeDataStore;
+    private readonly IMediator _mediator;
 
-    public AddProductHandler(FakeDataStore fakeDataStore) => _fakeDataStore = fakeDataStore;
-
-    public async Task Handle(AddProductCommand request, CancellationToken cancellationToken)
+    public AddProductHandler(FakeDataStore fakeDataStore, IMediator mediator)
     {
-        //var validator = new CreateProductCommandValidator();
-        //var validationResult = await validator.ValidateAsync(request);
+        _mediator = mediator;
+        _fakeDataStore = fakeDataStore;
+    }
 
-        //if (validationResult.Errors.Any())
-        //    throw new Exception("I);
-
+    async Task<int> IRequestHandler<AddProductCommand, int>.Handle(AddProductCommand request, CancellationToken cancellationToken)
+    {
         await _fakeDataStore.AddProduct(request.Product);
-        return;
+
+        await _mediator.Publish(new ProductCreatedNotification() { Product = request.Product }, CancellationToken.None);
+
+        return request.Product.Id;
     }
 }
